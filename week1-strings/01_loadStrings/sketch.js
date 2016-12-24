@@ -1,24 +1,27 @@
-// A2Z F16
-// Daniel Shiffman
-// https://github.com/shiffman/A2Z-F16
-// http://shiffman.net/a2z
-
-// Variable for array of lines
-var lines;
-// Variable where we'll join all the text together
 var txt;
 
-// Anything in preload will finish before setup() is triggered
-function preload() {
-  lines = loadStrings('files/spam.txt');
-}
+// function preload() {
+//   txt = loadStrings('rainbow.txt');
+// }
 
-// Now we can do stuff with the text
 function setup() {
   noCanvas();
-  // join() joins the elements of an array
-  // Here we pass in a line break to retain formatting
-  txt = join(lines, '<br/>');
-  var par = createP(txt);
-  par.id('text');
+  var button = select('#loadfile');
+  button.mousePressed(loadFile);
+  createFileInput(fileSelected);
+  // console.log(txt);
+  // createP(join(txt, '<br/><br/>'));
+}
+
+function fileSelected(file) {
+  createP(file.name+" "+file.size+" "+file.type);
+  createP(file.data);
+}
+
+function loadFile() {
+  loadStrings('rainbow.txt', fileLoaded);
+}
+
+function fileLoaded(data) {
+  createP(join(data, '<br/><br/>'));
 }
